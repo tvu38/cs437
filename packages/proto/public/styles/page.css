@@ -1,0 +1,11 @@
+body {
+    background-color: var(--color-page-background);
+    font-family:'Times New Roman', Times, serif;
+}
+h1 {
+    text-align: center;
+    color: var(--color-text-bigheader);
+}
+p {
+    color: var(--color-text);
+}
