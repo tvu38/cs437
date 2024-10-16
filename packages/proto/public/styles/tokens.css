@@ -1,5 +1,21 @@
 :root {
     --color-page-background: rgb(245, 245, 220);
+    --color-page-innerbox: rgb(209, 191, 163);
     --color-text-bigheader: rgb(255, 104, 104);
-    --color-text: rgb(0, 0, 0);
+    --color-text-body: rgb(0, 0, 0);
+
+    --font-family-body: "Ubuntu", sans-serif;
+    --font-family-display: "Lato", sans-serif;
+    --font-weight: 700;
+    --font-size: 50px;
+
+    --border-width: 550px;
+    --border-padding: 10px;
+
+    --border-padding-innerbox: 20px;
+    --margin-padding-innerbox: 20px auto;
+    --width-innerbox: 90%;
+
+    --text-center: center;
+
 }
