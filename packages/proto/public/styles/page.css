@@ -1,15 +1,58 @@
 body {
     background-color: var(--color-page-background);
-    font-family:'Times New Roman', Times, serif;
+    font-family: var(--font-family-display);
+    font-weight: var(--font-weight);
+}
+.inner-box {
+    background-color: var(--color-page-innerbox);   
+    padding: var(--border-padding-innerbox);          
+    margin: var(--margin-padding-innerbox);       
+    width: var(--width-innerbox);                
+}
+.homepagetitle h1{
+    font-family: var(--font-family-display);
+    color: navy; /* only unique color */
+    padding: 10px;
+    text-align: var(--text-center);
+    font-size: var(--font-size);
+    border: 5px solid black;
+    margin: 0 auto;
+    width: var(--border-width);
 }
 h1 {
-    text-align: center;
+    font-family: var(--font-family-display);
     color: var(--color-text-bigheader);
+    padding: var(--border-padding);
+    text-align: var(--text-center);
+    font-size: var(--font-size);
+    border: 5px solid var(--color-text-body);
+    margin: 0 auto;
+    width: var(--border-width);
 }
-h2 {
-    color: var(--color-text);
-    text-align: left;
+h2, h2 a{
+    font-family: var(--font-family-body);
+    color: darkslategrey; /* only unique color */
+    text-decoration: underline;
 }
-p {
-    color: var(--color-text);
+li a {
+    font-family: var(--font-family-body);
+    color: var(--color-text-body);
+    font-style: italic;
+}
+.svg-container {
+    width: 100%; /* Full width of the parent */
+    max-width: 900px; /* Maximum width */
+    margin: 0 auto; /* Center the container */
+    text-align: center; /* Center text inside the container */
+    display: flex; /* Use Flexbox */
+    flex-direction: column; /* Arrange children in a column */
+    align-items: center; /* Center items horizontally */
+}
+
+svg.icon {
+    display: inline;
+    margin-top: 20px; 
+    height: 10em;
+    width: 10em; 
+    fill: currentColor; 
 }
