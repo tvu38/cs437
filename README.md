@@ -13,4 +13,4 @@ npm start
 
 ## Documentation
 
-- Our [Concept Map](IAGraph.pdf)
+- Our [Concept Map](IA%20Graph.png)
