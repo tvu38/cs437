@@ -3,21 +3,12 @@ body {
     font-family: var(--font-family-display);
     font-weight: var(--font-weight);
 }
-.inner-box {
-    background-color: var(--color-page-innerbox);   
-    padding: var(--border-padding-innerbox);          
-    margin: var(--margin-padding-innerbox);       
-    width: var(--width-innerbox);                
-}
-.homepagetitle h1{
-    font-family: var(--font-family-display);
-    color: navy; /* only unique color */
-    padding: 10px;
-    text-align: var(--text-center);
-    font-size: var(--font-size);
-    border: 5px solid black;
-    margin: 0 auto;
-    width: var(--border-width);
+.page {
+    --page-grids: 12;
+  
+    display: grid;
+    grid-template-columns: [start] repeat(var(--page-grids), 1fr) [end];    
+    gap: var(--size-spacing-small) var(--size-spacing-small);
 }
 h1 {
     font-family: var(--font-family-display);
@@ -26,33 +17,87 @@ h1 {
     text-align: var(--text-center);
     font-size: var(--font-size);
     border: 5px solid var(--color-text-body);
-    margin: 0 auto;
-    width: var(--border-width);
+    margin: var(--margin-center);
+    grid-column: var(--header-span);
 }
 h2, h2 a{
     font-family: var(--font-family-body);
     color: darkslategrey; /* only unique color */
     text-decoration: underline;
+    grid-column: var(--header-span);
+    margin: 0;
+}
+h3 {
+    font-family: var( --font-family-body);
+    color: var(--color-text-body);
+    grid-column: var(--header-span);
+}
+.inner-box {
+    background-color: var(--color-page-innerbox);   
+    padding: var(--border-padding-innerbox);          
+    margin: var(--margin-padding-innerbox);       
+    width: auto;
+    height: auto;
+    grid-column: var(--inner-box-span); /* Start at the first column and span 10 cols */
+    display: grid;
+}
+.homepagetitle{
+    display: flex;
+}
+.homepagetitle h1{
+    font-family: var(--font-family-display);
+    color: navy; /* only unique color */
+    padding: var(--gap-padding);
+    text-align: var(--text-center);
+    font-size: var(--font-size);
+    border: 5px solid var(--color-text-body);
+    margin: var(--margin-center);
+}
+.navbar {
+    display: grid;
+    grid-template-columns: subgrid;
+    position: sticky; 
+    top: 0; 
+    background-color: var(--color-page-background); 
+    padding: var(--navbar-padding); 
+    grid-column: var(--grid-whole-span);
+}
+.navbar h2 {
+    font-family: var(--font-family-display);
+    grid-column: auto/ span 3;
+    font-style: bold;
 }
 li a {
     font-family: var(--font-family-body);
     color: var(--color-text-body);
     font-style: italic;
 }
-.svg-container {
-    width: 100%; /* Full width of the parent */
-    max-width: 900px; /* Maximum width */
-    margin: 0 auto; /* Center the container */
-    text-align: center; /* Center text inside the container */
-    display: flex; /* Use Flexbox */
-    flex-direction: column; /* Arrange children in a column */
-    align-items: center; /* Center items horizontally */
+/* Responsive behavior */
+@media (max-width: 600px) {
+    .icon {
+        height: 8em;
+        width: 6em; /* Shrinks icon size on smaller screens */
+    }
 }
-
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;   
+    gap: var(--gap-padding);
+    width: auto;
+    height: auto;
+}
+.icon-container {
+    width: auto;
+    margin: var(--margin-center);
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center icons horizontally */
+    gap: 10px; /* Space between icons */
+}
 svg.icon {
-    display: inline;
-    margin-top: 20px; 
-    height: 10em;
-    width: 10em; 
-    fill: currentColor; 
+    flex-wrap: wrap; /* Allow wrapping of icons */
+    width: 20%; /* Responsive width */
+    max-width: 100px; /* Maximum width for each icon */
+    height: auto; /* Maintain aspect ratio */
+    fill: currentColor; /* Optional: Use current text color */
 }
