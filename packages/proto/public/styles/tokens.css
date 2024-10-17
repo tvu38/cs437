@@ -15,7 +15,18 @@
     --border-padding-innerbox: 20px;
     --margin-padding-innerbox: 20px auto;
     --width-innerbox: 90%;
+    --navbar-padding: 10px 0;
 
     --text-center: center;
+    --margin-center: 0 auto;
 
+    --size-spacing-large: 1em;
+    --size-spacing-medium: 0.5rem;
+
+    --grid-whole-span: 1/ -1;
+
+    --header-span: auto / span 12;
+    --inner-box-span: auto / span 10;
+
+    --gap-padding: 10px;
 }
