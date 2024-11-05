@@ -20,7 +20,7 @@ h1 {
     margin: var(--margin-center);
     grid-column: var(--header-span);
 }
-h2, h2 a{
+h2, h2 a {
     font-family: var(--font-family-body);
     color: darkslategrey; /* only unique color */
     text-decoration: underline;

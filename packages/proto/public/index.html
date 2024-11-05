@@ -11,6 +11,24 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
+
+    <script type="importmap">
+        {
+            "imports":{
+                "@calpoly/mustang": "https://unpkg.com/@calpoly/mustang"
+            }
+        }
+    </script>
+    <script type="module">
+        import { define } from "@calpoly/mustang";
+        import { PuzzleList } from "/scripts/puzzlelist.js";
+
+        define ({
+            "puzzle-list": PuzzleList
+        })
+    </script>
+
+
   </head>
   <body>
     <main class="page">
@@ -44,51 +62,41 @@
             <use href="/icons/puzzlepiece.svg#icon-piece" />
         </svg>
     </div>
-
-
-    <div class="grid-container">
-        <div class="grid-item">
-            <h2>Level 1 Puzzles</h2>
-            <ol>
-                <li><a href="level-1/colors.html">Colors</a></li>
-                <li><a href="level-1/answer-yoohoo.html">Just Look Up</a></li>
-                <li><a href="level-1/aplusbequalsc.html">A+B=C</a></li>
-                <li><a href="level-1/time.html">Time</a></li>
-                <li><a href="level-1/1-3-puzzle.html">1/3 Puzzle</a></li>
-            </ol>
+    
+        <div class="grid-container">
+            <puzzle-list>
+                <span slot="level">Level 1 Puzzles</span>
+                <a slot="item-1" href="level-1/colors.html">Colors</a>
+                <a slot="item-2" href="level-1/answer-yoohoo.html">Just Look Up</a>
+                <a slot="item-3" href="level-1/aplusbequalsc.html">A+B=C</a>
+                <a slot="item-4" href="level-1/time.html">Time</a>
+                <a slot="item-5" href="level-1/1-3-puzzle.html">1/3 Puzzle</a>
+        </puzzle-list>
+        <puzzle-list>
+                <span slot="level">Level 2 Puzzles</span>
+                <a slot="item-1" href="level-2/not-without-precedent.html">Not Without Precedent</a>
+                <a slot="item-2" href="level-2/lunchable-gatorade.html">Lunchables Gatorade</a>
+                <a slot="item-3" href="level-2/nyc-subway.html">NYC Subway</a>
+                <a slot="item-4" href="level-2/blank-squares.html">Blank Squares</a>
+                <a slot="item-5" href="level-2/2-3-puzzle.html">2/3 Puzzle</a>
+            </puzzle-list>
+            <puzzle-list>
+                <span slot="level">Level 3 Puzzles</span>
+                <a slot="item-1" href="level-3/lele.html">LELE!</a>
+                <a slot="item-2" href="level-3/obligatory-connections-puzzle.html">Obligatory Connections Puzzle</a>
+                <a slot="item-3" href="level-3/three-crosses.html">Three Crosses</a>
+                <a slot="item-4" href="level-3/blank-spaces.html">Blank Spaces</a>
+                <a slot="item-5" href="level-3/list-of-really-really-really-stupid-article-ideas.html">List of really, really, really stupid article ideas</a>
+            </puzzle-list>
+            <puzzle-list>
+                <span slot="level">Level 4 Puzzles</span>
+                <a slot="item-1" href="level-4/the-puzzle-that-gives-back.html">The Puzzle That Gives Back</a>
+                <a slot="item-2" href="level-4/path.html">Path</a>
+                <a slot="item-3" href="level-4/generational-gifts.html">Generational Gifts</a>
+                <a slot="item-4" href="level-4/all-the-moves.html">All the Moves</a>
+                <a slot="item-5" href="level-4/50-50.html">50/50</a></li>
+            </puzzle-list>
         </div>
-        <div class="grid-item">
-            <h2>Level 2 Puzzles</h2>
-            <ol>
-                <li><a href= "level-2/not-without-precedent.html">Not Without Precedent</a></li>
-                <li><a href="level-2/lunchable-gatorade.html">Lunchables Gatorade</a></li>
-                <li><a href="level-2/nyc-subway.html">NYC Subway</a></li>
-                <li><a href="level-2/blank-squares.html">Blank Squares</a></li>
-                <li><a href="level-2/2-3-puzzle.html">2/3 Puzzle</a></li>
-            </ol>
-        </div>
-        <div class="grid-item">
-            <h2>Level 3 Puzzles</h3>
-                <ol>
-                    <li><a href="level-3/lele.html">LELE!</a></li>
-                    <li><a href="level-3/obligatory-connections-puzzle.html">Obligatory Connections Puzzle</a></li>
-                    <li><a href="level-3/three-crosses.html">Three Crosses</a></li>
-                    <li><a href="level-3/blank-spaces.html">Blank Spaces</a></li>
-                    <li><a href="level-3/list-of-really-really-really-stupid-article-ideas.html">List of really, really, really stupid article ideas</a></li>
-                </ol>
-        </div>
-        <div class="grid-item">
-            <h2>Level 4 Puzzles</h4>
-                <ol>
-                    <li><a href="level-4/the-puzzle-that-gives-back.html">The Puzzle That Gives Back</a></li>
-                    <li><a href="level-4/path.html">Path</a></li>
-                    <li><a href="level-4/generational-gifts.html">Generational Gifts</a></li>
-                    <li><a href="level-4/all-the-moves.html">All the Moves</a></li>
-                    <li><a href="level-4/50-50.html">50/50</a></li>
-                </ol>
-        </div>
-    </div>
-    </div>
     </main>
   </body>
 </html>
