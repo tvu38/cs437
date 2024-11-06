@@ -3,6 +3,12 @@ body {
     font-family: var(--font-family-display);
     font-weight: var(--font-weight);
 }
+
+/* Dark mode styles */
+body.dark-mode {
+    color: #ffffff;
+}
+
 .page {
     --page-grids: 12;
   
@@ -10,6 +16,22 @@ body {
     grid-template-columns: [start] repeat(var(--page-grids), 1fr) [end];    
     gap: var(--size-spacing-small) var(--size-spacing-small);
 }
+
+.navbar {
+    display: grid;
+    grid-template-columns: subgrid;
+    position: sticky;
+    top: 0;
+    background-color: var(--color-page-background);
+    padding: var(--navbar-padding);
+    grid-column: var(--grid-whole-span);
+  }
+  .navbar h2 {
+    font-family: var(--font-family-display);
+    grid-column: auto / span 3;
+    font-weight: bold;
+  }
+
 h1 {
     font-family: var(--font-family-display);
     color: var(--color-text-bigheader);
@@ -22,7 +44,7 @@ h1 {
 }
 h2, h2 a {
     font-family: var(--font-family-body);
-    color: darkslategrey; /* only unique color */
+    color: var(--color-text-subheader); /* only unique color */
     text-decoration: underline;
     grid-column: var(--header-span);
     margin: 0;
@@ -46,27 +68,14 @@ h3 {
 }
 .homepagetitle h1{
     font-family: var(--font-family-display);
-    color: navy; /* only unique color */
+    color: var(--color-text-bigheader);/*navy; /* only unique color */
     padding: var(--gap-padding);
     text-align: var(--text-center);
     font-size: var(--font-size);
     border: 5px solid var(--color-text-body);
     margin: var(--margin-center);
 }
-.navbar {
-    display: grid;
-    grid-template-columns: subgrid;
-    position: sticky; 
-    top: 0; 
-    background-color: var(--color-page-background); 
-    padding: var(--navbar-padding); 
-    grid-column: var(--grid-whole-span);
-}
-.navbar h2 {
-    font-family: var(--font-family-display);
-    grid-column: auto/ span 3;
-    font-style: bold;
-}
+
 li a {
     font-family: var(--font-family-body);
     color: var(--color-text-body);
