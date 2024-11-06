@@ -18,15 +18,18 @@
     `;
     
     static styles = css`
-    li a {
-        font-family: var(--font-family-body);
+
+     
+       ol, li {
+        font-size: var(--font-size-small);
         color: var(--color-text-body);
         font-style: italic;
-        }
+       }
 
         h2{
             font-family: var(--font-family-body);
-            color: darkslategrey; /* only unique color */
+            font-size: var(--font-size-medium);
+            color: var(--color-text-subheader);
             text-decoration: underline;
             grid-column: var(--header-span);
             margin: 0;

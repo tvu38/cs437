@@ -1,13 +1,17 @@
 :root {
     --color-page-background: rgb(245, 245, 220);
     --color-page-innerbox: rgb(209, 191, 163);
-    --color-text-bigheader: rgb(255, 104, 104);
+    --color-text-bigheader: rgb(14, 77, 100);
     --color-text-body: rgb(0, 0, 0);
+    --color-text-subheader: rgb(47, 79, 79);
 
     --font-family-body: "Ubuntu", sans-serif;
     --font-family-display: "Lato", sans-serif;
     --font-weight: 700;
     --font-size: 60px;
+
+    --font-size-medium: 30px;
+    --font-size-small: 20px;
 
     --border-width: 550px;
     --border-padding: 10px;
@@ -30,3 +34,12 @@
 
     --gap-padding: 10px;
 }
+
+/* TODO: fix up */
+body.dark-mode {
+    --color-page-background: #1E1E1E;
+    --color-page-innerbox: #333333;
+    --color-text-bigheader: rgb(161, 217, 237);
+    --color-text-body: rgb(255, 255, 255);
+    --color-text-subheader: rgb(177, 206, 206);
+  }
