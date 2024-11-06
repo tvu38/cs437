@@ -13,6 +13,10 @@ export class NavBarElement extends HTMLElement {
         <input type="checkbox" id="dark-mode-toggle" />
         <h2> Dark Mode</h2>
       </label>
+        <h2><slot name="hint"><a href="#"></a></slot></h2>
+        <h2><slot name="solution"><a href="#"></a></slot></h2>
+    </div>
+
     </div>  
   </template>
   `;
@@ -33,7 +37,7 @@ export class NavBarElement extends HTMLElement {
     grid-column: var(--grid-whole-span);
   }
 
-  .navbar h2 a, h2, label{
+  ::slotted(a), .navbar h2 a, h2, .navbar label{
     grid-column: auto / span 2;
     font-family: var(--font-family-body);
     color: var(--color-text-subheader); /* only unique color */
@@ -45,7 +49,7 @@ export class NavBarElement extends HTMLElement {
     align-items: center;
   }
 
-  .navbar h2 a:hover {
+  .navbar h2 a:hover, ::slotted(a:hover) {
     text-decoration: underline;
 }
 
@@ -65,6 +69,7 @@ export class NavBarElement extends HTMLElement {
         })
       );
     }
+
   }
 
   static initializeOnce() {
