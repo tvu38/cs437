@@ -44,4 +44,23 @@ function get(name) {
     throw `${name} Not Found`;
   });
 }
-var puzzle_svc_default = { index, get };
+function update(userid, puzzle) {
+  return PuzzleModel.findOneAndUpdate({ userid }, puzzle, {
+    new: true
+  }).then((updated) => {
+    if (!updated) throw `${userid} not updated`;
+    else return updated;
+  });
+}
+function create(puzzle) {
+  const p = new PuzzleModel(puzzle);
+  return p.save();
+}
+function remove(userid) {
+  return PuzzleModel.findOneAndDelete({ userid }).then(
+    (deleted) => {
+      if (!deleted) throw `${userid} not deleted`;
+    }
+  );
+}
+var puzzle_svc_default = { index, get, create, update, remove };
