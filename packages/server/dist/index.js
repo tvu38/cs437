@@ -25,11 +25,14 @@ var import_express = __toESM(require("express"));
 var import_puzzle = require("./pages/puzzle");
 var import_puzzle_svc = __toESM(require("./services/puzzle-svc"));
 var import_mongo = require("./services/mongo");
+var import_puzzles = __toESM(require("./routes/puzzles"));
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
 (0, import_mongo.connect)("puzzle");
 app.use(import_express.default.static(staticDir));
+app.use(import_express.default.json());
+app.use("/api/puzzles", import_puzzles.default);
 app.get("/:levelId/:puzzleId", (req, res) => {
   const { levelId, puzzleId } = req.params;
   import_puzzle_svc.default.get(puzzleId).then((data) => {

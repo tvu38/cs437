@@ -28,8 +28,33 @@ function index(): Promise<Puzzle[]> {
         throw `${name} Not Found`;
       });
   }
+
+  function update(
+    userid: String,
+    puzzle: Puzzle
+  ): Promise<Puzzle> {
+    return PuzzleModel.findOneAndUpdate({ userid }, puzzle, {
+      new: true
+    }).then((updated) => {
+      if (!updated) throw `${userid} not updated`;
+      else return updated as Puzzle;
+    });
+  }
   
-  export default { index, get };
+  function create(puzzle: Puzzle): Promise<Puzzle> {
+    const p = new PuzzleModel(puzzle);
+    return p.save();
+  }
+  
+  function remove(userid: String): Promise<void> {
+    return PuzzleModel.findOneAndDelete({ userid }).then(
+      (deleted) => {
+        if (!deleted) throw `${userid} not deleted`;
+      }
+    );
+  }
+
+  export default { index, get, create, update, remove };
 
 /*
 const puzzles = {

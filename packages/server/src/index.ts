@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { PuzzlePage } from "./pages/puzzle";
 import Puzzles from "./services/puzzle-svc";
 import { connect } from "./services/mongo";
+import puzzles from "./routes/puzzles";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -10,6 +11,9 @@ const staticDir = process.env.STATIC || "public";
 connect("puzzle");
 
 app.use(express.static(staticDir));
+app.use(express.json());
+
+app.use("/api/puzzles", puzzles);
 
 app.get("/:levelId/:puzzleId", (req: Request, res: Response) => {
   const { levelId, puzzleId } = req.params;
