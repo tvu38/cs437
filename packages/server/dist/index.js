@@ -23,20 +23,25 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var import_express = __toESM(require("express"));
 var import_puzzle = require("./pages/puzzle");
-var import_puzzle_svc = require("./services/puzzle-svc");
+var import_puzzle_svc = __toESM(require("./services/puzzle-svc"));
+var import_mongo = require("./services/mongo");
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
+(0, import_mongo.connect)("puzzle");
 app.use(import_express.default.static(staticDir));
-app.get(
-  "/level-1/:puzzleId",
-  (req, res) => {
-    const { puzzleId } = req.params;
-    const data = (0, import_puzzle_svc.getPuzzle)(puzzleId);
+app.get("/:levelId/:puzzleId", (req, res) => {
+  const { levelId, puzzleId } = req.params;
+  import_puzzle_svc.default.get(puzzleId).then((data) => {
+    if (!data) {
+      return res.status(404).send("Puzzle not found");
+    }
     const page = new import_puzzle.PuzzlePage(data);
     res.set("Content-Type", "text/html").send(page.render());
-  }
-);
+  }).catch((err) => {
+    res.status(500).send("Internal Server Error");
+  });
+});
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

@@ -26,52 +26,33 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var puzzle_exports = {};
-__export(puzzle_exports, {
-  PuzzlePage: () => PuzzlePage
+var mongo_exports = {};
+__export(mongo_exports, {
+  connect: () => connect
 });
-module.exports = __toCommonJS(puzzle_exports);
-var import_server = require("@calpoly/mustang/server");
-var import_renderPage = __toESM(require("./renderPage"));
-class PuzzlePage {
-  data;
-  constructor(data) {
-    this.data = data;
+module.exports = __toCommonJS(mongo_exports);
+var import_mongoose = __toESM(require("mongoose"));
+var import_dotenv = __toESM(require("dotenv"));
+import_mongoose.default.set("debug", true);
+import_dotenv.default.config();
+function getMongoURI(dbname) {
+  let connection_string = `mongodb://localhost:27017/${dbname}`;
+  const { MONGO_USER, MONGO_PWD, MONGO_CLUSTER } = process.env;
+  if (MONGO_USER && MONGO_PWD && MONGO_CLUSTER) {
+    console.log(
+      "Connecting to MongoDB at",
+      `mongodb+srv://${MONGO_USER}:<password>@${MONGO_CLUSTER}/${dbname}`
+    );
+    connection_string = `mongodb+srv://${MONGO_USER}:${MONGO_PWD}@${MONGO_CLUSTER}/${dbname}?retryWrites=true&w=majority`;
+  } else {
+    console.log("Connecting to MongoDB at ", connection_string);
   }
-  render() {
-    return (0, import_renderPage.default)({
-      body: this.renderBody(),
-      stylesheets: [],
-      styles: [],
-      scripts: []
-    });
-  }
-  renderBody() {
-    const {
-      name,
-      title,
-      solution_url,
-      hint,
-      flavor_text,
-      content,
-      featured_image
-      /* , etc */
-    } = this.data;
-    return import_server.html`
-    <body>
-    <main class="page">
-      <nav-bar>
-        <a slot="hint" href=${hint}>Hint</a>
-        <a slot="solution" href=${solution_url}>Solution</a>
-      </nav-bar>
-      <h1>${title}</h1>
-      <h2>${flavor_text}</h2>
-      <h3>${content}</h3>
-    </main>
-  </body> `;
-  }
+  return connection_string;
+}
+function connect(dbname) {
+  import_mongoose.default.connect(getMongoURI(dbname)).catch((error) => console.log(error));
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  PuzzlePage
+  connect
 });

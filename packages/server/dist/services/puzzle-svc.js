@@ -18,24 +18,30 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var puzzle_svc_exports = {};
 __export(puzzle_svc_exports, {
-  getPuzzle: () => getPuzzle
+  default: () => puzzle_svc_default
 });
 module.exports = __toCommonJS(puzzle_svc_exports);
-const puzzles = {
-  colors: {
-    name: "Colors",
-    level: "level-1",
-    solution_url: "/level-1/colors-solution.html",
-    hint: "/level-1/colors-hint.html",
-    flavor_text: "Eat me",
-    content: "N/A",
-    features_image: ""
-  }
-};
-function getPuzzle(_) {
-  return puzzles["colors"];
+var import_mongoose = require("mongoose");
+const PuzzleSchema = new import_mongoose.Schema(
+  {
+    name: { type: String, required: true, trim: true },
+    title: { type: String, required: true, trim: true },
+    level: { type: String, required: true, trim: true },
+    solution_url: { type: String, required: true, trim: true },
+    hint: { type: String, required: true, trim: true },
+    flavor_text: { type: String, required: true, trim: true },
+    content: { type: String, required: true, trim: true },
+    featured_image: { type: String, required: false, trim: true }
+  },
+  { collection: "puzzles" }
+);
+const PuzzleModel = (0, import_mongoose.model)("Puzzle", PuzzleSchema);
+function index() {
+  return PuzzleModel.find();
 }
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  getPuzzle
-});
+function get(name) {
+  return PuzzleModel.find({ name }).then((list) => list[0]).catch((err) => {
+    throw `${name} Not Found`;
+  });
+}
+var puzzle_svc_default = { index, get };
