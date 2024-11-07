@@ -37,7 +37,7 @@ app.get("/:levelId/:puzzleId", (req, res) => {
   const { levelId, puzzleId } = req.params;
   import_puzzle_svc.default.get(puzzleId).then((data) => {
     if (!data) {
-      return res.status(404).send("Puzzle not found");
+      return res.status(404).send("Puzzle not found. Not Yet implemented");
     }
     const page = new import_puzzle.PuzzlePage(data);
     res.set("Content-Type", "text/html").send(page.render());
