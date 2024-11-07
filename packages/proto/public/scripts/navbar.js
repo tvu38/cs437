@@ -2,6 +2,10 @@ import { css, html, shadow, Events } from "@calpoly/mustang";
 import reset from "./styles/reset.css.js";
 
 export class NavBarElement extends HTMLElement {
+  get src() {
+    return this.getAttribute("src");
+  }
+
   // Define the template for the component
   static template = html`
   <template>
@@ -70,6 +74,38 @@ export class NavBarElement extends HTMLElement {
       );
     }
 
+  }
+
+
+  connectedCallback() {
+    if (this.src) this.hydrate(this.src);
+  }
+
+  hydrate(url) {
+    fetch(url)
+      .then((res) => {
+        if (res.status !== 200) throw `Status: ${res.status}`;
+        return res.json();
+      })
+      .then((json) => this.renderSlots(json))
+      .catch((error) =>
+        console.log(`Failed to render data ${url}:`, error)
+      );
+  }
+
+  renderSlots(json) {
+    const entries = Object.entries(json);
+    const toSlot = ([key, value]) => {
+      switch(key) {
+        case "hint":
+          return html`<a slot="hint" href="${value}">Hint</a>`;
+        case "solution_url":
+          return html`<a slot="solution" href="${value}">Solution</a>`;
+      }
+    }
+  
+    const fragment = entries.map(toSlot);
+    this.replaceChildren(...fragment);
   }
 
   static initializeOnce() {
