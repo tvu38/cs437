@@ -21,6 +21,7 @@ export class PuzzlePage {
 
   renderBody() {
     const { name,
+      title,
       solution_url,
       hint,
       flavor_text,
@@ -33,7 +34,7 @@ export class PuzzlePage {
         <a slot="hint" href=${hint}>Hint</a>
         <a slot="solution" href=${solution_url}>Solution</a>
       </nav-bar>
-      <h1>${name}</h1>
+      <h1>${title}</h1>
       <h2>${flavor_text}</h2>
       <h3>${content}</h3>
     </main>

@@ -1,5 +1,6 @@
 export interface Puzzle {
     name: string;
+    title: string;
     level: string;
     solution_url: string;
     hint: string;
