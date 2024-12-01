@@ -53,6 +53,7 @@ export class PuzzlePage {
       hint,
       flavor_text,
       content,
+      answer,
       featured_image } = this.data;
 
       // Replace all occurrences of "\\n" with actual newlines
@@ -69,6 +70,30 @@ export class PuzzlePage {
       ${flavor_text ? html`<h2>${flavor_text}</h2>` : ''} <!-- Conditionally render flavortext -->
       ${processedContent ? html`<h3>${processedContent}</h3>` : ''} <!-- Conditionally render content -->
       ${featured_image ? html`<img src=${featured_image}>` : ''} <!-- Conditionally render content -->
+
+      <input type="text" id="answerInput" placeholder="Type your answer here">
+      <button id="submitButton">Submit</button>
+      <p id="result"></p>
+
+      <script>
+          // Define the correct answer
+          const correctAnswer = '${answer}';
+  
+          // Add an event listener to the button
+          document.getElementById('submitButton').addEventListener('click', () => {
+              const userInput = document.getElementById('answerInput').value.trim().toLowerCase();
+              const resultElement = document.getElementById('result');
+  
+              if (userInput === correctAnswer) {
+                  resultElement.textContent = "Correct! You've solved the puzzle!";
+                  resultElement.className = "correct";
+              } else {
+                  resultElement.textContent = "Incorrect answer. Try again!";
+                  resultElement.className = "incorrect";
+              }
+          });
+      </script>
+  
     </main>
   </body> `;
   }
@@ -76,3 +101,6 @@ export class PuzzlePage {
 
 //const parser = new DOMParser()
 //parser.parseFromString(htmlString, "text/html");
+
+//4.1 - DOM - Custom Element
+//Class DomParser

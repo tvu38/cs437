@@ -3,6 +3,9 @@ import { PuzzlePage } from "./pages/puzzle";
 import Puzzles from "./services/puzzle-svc";
 import { connect } from "./services/mongo";
 import puzzles from "./routes/puzzles";
+import auth, { authenticateUser } from "./routes/auth";
+
+import { LoginPage } from "./pages/auth";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,7 +16,14 @@ connect("puzzle");
 app.use(express.static(staticDir));
 app.use(express.json());
 
-app.use("/api/puzzles", puzzles);
+app.use("/api/puzzles", authenticateUser, puzzles);
+app.use("/auth", auth);
+
+// with the other HTML routes
+app.get("/login", (req: Request, res: Response) => {
+  const page = new LoginPage();
+  res.set("Content-Type", "text/html").send(page.render());
+});
 
 app.get("/:levelId/:puzzleId", (req: Request, res: Response) => {
   const { levelId, puzzleId } = req.params;
