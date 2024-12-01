@@ -26,13 +26,20 @@ var import_puzzle = require("./pages/puzzle");
 var import_puzzle_svc = __toESM(require("./services/puzzle-svc"));
 var import_mongo = require("./services/mongo");
 var import_puzzles = __toESM(require("./routes/puzzles"));
+var import_auth = __toESM(require("./routes/auth"));
+var import_auth2 = require("./pages/auth");
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
 (0, import_mongo.connect)("puzzle");
 app.use(import_express.default.static(staticDir));
 app.use(import_express.default.json());
-app.use("/api/puzzles", import_puzzles.default);
+app.use("/api/puzzles", import_auth.authenticateUser, import_puzzles.default);
+app.use("/auth", import_auth.default);
+app.get("/login", (req, res) => {
+  const page = new import_auth2.LoginPage();
+  res.set("Content-Type", "text/html").send(page.render());
+});
 app.get("/:levelId/:puzzleId", (req, res) => {
   const { levelId, puzzleId } = req.params;
   import_puzzle_svc.default.get(puzzleId).then((data) => {

@@ -110,3 +110,20 @@ svg.icon {
     height: auto; /* Maintain aspect ratio */
     fill: currentColor; /* Optional: Use current text color */
 }
+
+#answerInput {
+    margin-top: 20px; /* Adds space above the input */
+    font-size: 18px;
+    grid-column: 5 / span 3;
+    height: 50px; /* Adjust the height to make it taller */
+
+    box-sizing: border-box; /* Include padding and border in dimensions */
+    /* Border properties */
+    border: 2px solid #000000;
+     border-radius: 3px;
+}
+  
+#submitButton {
+    margin-top: 20px; /* Adds space above the input */
+    grid-column: 8 / span 1;
+}

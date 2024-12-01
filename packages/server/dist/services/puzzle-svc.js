@@ -31,7 +31,8 @@ const PuzzleSchema = new import_mongoose.Schema(
     hint: { type: String, required: true, trim: true },
     flavor_text: { type: String, required: false, trim: true },
     content: { type: String, required: false, trim: true },
-    featured_image: { type: String, required: false, trim: true }
+    featured_image: { type: String, required: false, trim: true },
+    answer: { type: String, required: true, trim: true }
   },
   { collection: "puzzles" }
 );
