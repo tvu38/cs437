@@ -69,15 +69,15 @@ export class NavBarElement extends HTMLElement {
       console.error("Element with ID #userid not found.");
     }
 
-    const dmSwitch = this.shadowRoot.querySelector(".dark-mode-switch");
-    if (dmSwitch) {
-      dmSwitch.addEventListener("click", (event) =>
+    const dmToggle = this.shadowRoot.querySelector("#dark-mode-toggle");
+    if (dmToggle) {
+      dmToggle.addEventListener("change", (event) =>
         Events.relay(event, "dark-mode", {
           checked: event.target.checked,
         })
       );
     }
-  }
+  }    
 
   _authObserver = new Observer(this, "puzzles:auth");
 
@@ -134,5 +134,15 @@ export class NavBarElement extends HTMLElement {
 
     const fragment = entries.map(toSlot);
     this.replaceChildren(...fragment);
+  }
+
+  static initializeOnce() {
+    function toggleDarkMode(page, checked) {
+      page.classList.toggle("dark-mode", checked);
+    }
+
+    document.body.addEventListener("dark-mode", (event) =>
+      toggleDarkMode(event.currentTarget, event.detail.checked)
+    );
   }
 }
