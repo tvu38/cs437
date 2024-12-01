@@ -54,7 +54,7 @@ class LoginPage {
       ],
       body: import_server.html`
           <body>
-            <mu-auth provides="blazing:auth">
+            <mu-auth provides="puzzles:auth">
               <article>
                 <blz-header></blz-header>
                 <main class="page">

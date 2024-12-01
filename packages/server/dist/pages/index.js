@@ -1,48 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Style for whole document -->
-    <meta charset="utf-8" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/reset.css" />
-    <link rel="stylesheet" href="/styles/tokens.css" />
-    <link rel="stylesheet" href="/styles/page.css" />
-
-    <script type="importmap">
-        {
-            "imports":{
-                "@calpoly/mustang": "https://unpkg.com/@calpoly/mustang"
-            }
-        }
-    </script>
-    <script type="module">
-        import { define, Auth } from "@calpoly/mustang";
-        import { PuzzleList } from "/scripts/puzzlelist.js";
-        import { NavBarElement } from "/scripts/navbar.js";
-        import { TravelerProfileElement } from "/scripts/profile.js";
-
-        define ({
-            "puzzle-list": PuzzleList,
-            "nav-bar": NavBarElement,
-            "mu-auth": Auth.Provider,
-            "complex-profile-name": TravelerProfileElement
-        })
-
-        NavBarElement.initializeOnce();
-
-    </script>
-  </head>
-  <body>
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var pages_exports = {};
+__export(pages_exports, {
+  HomePage: () => HomePage
+});
+module.exports = __toCommonJS(pages_exports);
+var import_server = require("@calpoly/mustang/server");
+var import_renderPage = __toESM(require("./renderPage"));
+class HomePage {
+  data;
+  mode;
+  constructor(data, mode) {
+    this.data = data;
+    this.mode = mode;
+  }
+  render() {
+    return (0, import_renderPage.default)({
+      body: this.renderBody(),
+      stylesheets: [],
+      styles: [],
+      scripts: [`
+          import { define, Auth } from "@calpoly/mustang";
+          import { PuzzleList } from "/scripts/puzzlelist.js";
+          import { NavBarElement } from "/scripts/navbar.js";
+          import { TravelerProfileElement } from "/scripts/profile.js";
+  
+          define ({
+              "puzzle-list": PuzzleList,
+              "nav-bar": NavBarElement,
+              "mu-auth": Auth.Provider,
+              "complex-profile-name": TravelerProfileElement
+          })
+  
+          NavBarElement.initializeOnce();
+          `]
+    });
+  }
+  renderBody() {
+    const base = "/profile";
+    const api = this.data ? `profile/${this.data.userid}` : "base";
+    return import_server.html`
+          <body>
     <mu-auth provides ="puzzles:auth">
     <main class="page">
 
         <nav-bar></nav-bar>
 
-        <complex-profile-name src="/profile/ManiaMate" mode="view"></complex-profile-name>
+        <complex-profile-name src="${api}" mode="${this.mode}"></complex-profile-name>
 
     <!-- <script src="/scripts/navbar.js"></script> --> 
 
@@ -107,5 +137,10 @@
         </div>
     </main>
 </mu-auth>
-  </body>
-</html>
+  </body> `;
+  }
+}
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  HomePage
+});

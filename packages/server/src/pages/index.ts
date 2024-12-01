@@ -1,48 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Style for whole document -->
-    <meta charset="utf-8" />
+import { css, html } from "@calpoly/mustang/server";
+import { Profile } from "../models";
+import renderPage from "./renderPage"; // generic page renderer
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/reset.css" />
-    <link rel="stylesheet" href="/styles/tokens.css" />
-    <link rel="stylesheet" href="/styles/page.css" />
+type Mode = "view" | "new" | "edit";
 
-    <script type="importmap">
-        {
-            "imports":{
-                "@calpoly/mustang": "https://unpkg.com/@calpoly/mustang"
-            }
-        }
-    </script>
-    <script type="module">
-        import { define, Auth } from "@calpoly/mustang";
-        import { PuzzleList } from "/scripts/puzzlelist.js";
-        import { NavBarElement } from "/scripts/navbar.js";
-        import { TravelerProfileElement } from "/scripts/profile.js";
+export class HomePage {
+    data: Profile | null;
+    mode: Mode;
 
-        define ({
-            "puzzle-list": PuzzleList,
-            "nav-bar": NavBarElement,
-            "mu-auth": Auth.Provider,
-            "complex-profile-name": TravelerProfileElement
-        })
+    constructor(data: Profile | null, mode: Mode) {
+        this.data = data;
+        this.mode = mode;
+    }
 
-        NavBarElement.initializeOnce();
+    render() {
+        return renderPage({
+          body: this.renderBody(),
+          stylesheets: [],
+          styles: [],
+          scripts: [ `
+          import { define, Auth } from "@calpoly/mustang";
+          import { PuzzleList } from "/scripts/puzzlelist.js";
+          import { NavBarElement } from "/scripts/navbar.js";
+          import { TravelerProfileElement } from "/scripts/profile.js";
+  
+          define ({
+              "puzzle-list": PuzzleList,
+              "nav-bar": NavBarElement,
+              "mu-auth": Auth.Provider,
+              "complex-profile-name": TravelerProfileElement
+          })
+  
+          NavBarElement.initializeOnce();
+          `]
+        });
+      }
+       renderBody() {
+        
+        const base = "/profile";
+        const api = this.data
+          ? `profile/${this.data.userid}`
+          : "base";
 
-    </script>
-  </head>
-  <body>
+
+          return html`
+          <body>
     <mu-auth provides ="puzzles:auth">
     <main class="page">
 
         <nav-bar></nav-bar>
 
-        <complex-profile-name src="/profile/ManiaMate" mode="view"></complex-profile-name>
+        <complex-profile-name src="${api}" mode="${this.mode}"></complex-profile-name>
 
     <!-- <script src="/scripts/navbar.js"></script> --> 
 
@@ -107,5 +115,6 @@
         </div>
     </main>
 </mu-auth>
-  </body>
-</html>
+  </body> `;
+        }
+  }
