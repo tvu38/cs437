@@ -20,23 +20,80 @@
        }
    </script>
    <script type="module">
-       import { define } from "@calpoly/mustang";
+       import { define, Auth } from "@calpoly/mustang";
        import { NavBarElement } from "/scripts/navbar.js";
 
        define ({
-           "nav-bar": NavBarElement
+           "nav-bar": NavBarElement,
+           "mu-auth": Auth.Provider
        })
 
        NavBarElement.initializeOnce();
 
+        // Fetch and Render Leaderboard
+      async function fetchLeaderboard() {
+        try {
+          // Fetch data from the /api/profiles/all endpoint
+          const response = await fetch("/api/all-profiles");
+          if (!response.ok) {
+            throw new Error("Failed to fetch leaderboard data");
+          }
+
+          const profiles = await response.json();
+
+          // Sort profiles by puzzlessolved in descending order
+          profiles.sort((a, b) => b.puzzlessolved - a.puzzlessolved);
+
+          // Get leaderboard container
+          const leaderboardTable = document.querySelector("#leaderboard-table tbody");
+
+          // Render each profile into the leaderboard table
+          profiles.forEach((profile) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>
+                <img src="${profile.avatar || '/images/default-avatar.png'}" alt="Avatar" class="avatar" />
+              </td>
+              <td>${profile.displayname || "Unknown"}</td>
+              <td>${profile.catchphrase || "No catchphrase"}</td>
+              <td>${profile.puzzlessolved || 0}</td>
+            `;
+            leaderboardTable.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Error loading leaderboard:", error);
+          const leaderboardContainer = document.querySelector("#leaderboard-container");
+          leaderboardContainer.innerHTML = `<p class="error">Failed to load leaderboard. Please try again later.</p>`;
+        }
+      }
+
+      // Initialize leaderboard on page load
+      window.addEventListener("DOMContentLoaded", fetchLeaderboard);
+
    </script>
   </head>
   <body>
+    <mu-auth provides ="puzzles:auth">
     <main class="page">
       <nav-bar></nav-bar>
 
     <h1>Leaderboard</h1>
-    <h2>This is an entry in leaderboard.</h2>
+    <div id="leaderboard-container">
+      <table id="leaderboard-table" class="leaderboard">
+        <thead>
+          <tr>
+            <th>Avatar</th>
+            <th>Display Name</th>
+            <th>Catchphrase</th>
+            <th>Puzzles Solved</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
   </main>
+  </mu-auth>
   </body>
 </html>

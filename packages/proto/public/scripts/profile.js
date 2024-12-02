@@ -16,23 +16,29 @@ export class TravelerProfileElement extends HTMLElement {
   });
 
   static template = html`<template>
+
+  <a slot="actuator">
+  Hello,
+  <span id="username" slot="username">puzzler</span>
+  </a>
+
     <section class="view">
       <slot name="avatar"></slot>
       <button id="edit">Edit</button>
       <h1><slot name="name"></slot></h1>
       <dl>
-        <dt>Username: </dt>
-        <dd><slot name="userid"></slot></dd>
+        <dt>Display Name: </dt>
+        <dd><slot name="displayname">Unknown</slot></dd>
         <dt>Catchphrase: </dt>
-        <dd><slot name="catchphrase"></slot></dd>
+        <dd><slot name="catchphrase">No Catchphrase</slot></dd>
         <dt>Puzzles Solved: </dt>
-        <dd><slot name="puzzlessolved"></slot></dd>
+        <dd><slot name="puzzlessolved">0</slot></dd>
       </dl>
     </section>
     <mu-form class="edit">
       <label>
-        <span>Username</span>
-        <input name="userid" />
+        <span>Display Name</span>
+        <input name="displayname" />
       </label>
       <label>
         <span>Catchphrase</span>
@@ -113,6 +119,14 @@ export class TravelerProfileElement extends HTMLElement {
     return this.getAttribute("src");
   }
 
+  set src(value) {
+    if (value) {
+        this.setAttribute("src", value);
+    } else {
+        this.removeAttribute("src");
+    }
+}
+
   get mode() {
     return this.getAttribute("mode");
   }
@@ -160,12 +174,27 @@ export class TravelerProfileElement extends HTMLElement {
 
   connectedCallback() {
     this._authObserver.observe(({ user }) => {
-      console.log("Authenticated user:", user);
-      this._user = user;
-      if (this.src && this.mode !== "new")
-        this.hydrate(this.src);
+        console.log("Authenticated user:", user);
+        this._user = user;
+
+        // Update the "userid" in the DOM
+        const usernameSpan = this.shadowRoot.querySelector("#username");
+        if (usernameSpan && user.username) {
+            usernameSpan.textContent = user.username; // Set authenticated username
+        }
+
+        // Automatically fetch the current user's profile if no `src` is provided
+        if (!this.src && user && user.username) {
+            this.src = `/profile/${user.username}`;
+        }
+
+        if (this.src && this.mode !== "new") {
+            this.hydrate(this.src);
+        }
     });
-  }
+}
+
+
 
   static observedAttributes = ["src"];
 

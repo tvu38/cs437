@@ -25,6 +25,7 @@ var import_mongoose = require("mongoose");
 const profileSchema = new import_mongoose.Schema(
   {
     userid: { type: String, required: true, trim: true },
+    displayname: { type: String, required: false, trim: true },
     avatar: {
       data: Buffer,
       contentType: String

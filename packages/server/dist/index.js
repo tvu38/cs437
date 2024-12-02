@@ -36,6 +36,9 @@ const staticDir = process.env.STATIC || "public";
 (0, import_mongo.connect)("puzzle");
 app.use(import_express.default.static(staticDir));
 app.use(import_express.default.json());
+app.get("/", import_auth2.authenticateUser, (req, res) => {
+  res.redirect("/index.html");
+});
 app.use("/api/puzzles", import_auth2.authenticateUser, import_puzzles.default);
 app.use("/api/profiles", import_auth2.authenticateUser, import_profile.default);
 app.use("/auth", import_auth2.default);
@@ -43,12 +46,21 @@ app.get("/login", (req, res) => {
   const page = new import_auth.LoginPage();
   res.set("Content-Type", "text/html").send(page.render());
 });
+app.get("/api/all-profiles", (req, res) => {
+  import_profile_svc.default.index().then((profiles2) => {
+    res.status(200).json(profiles2);
+  }).catch((error) => {
+    console.error("Error fetching profiles:", error);
+    res.status(500).json({ error: "Failed to fetch profiles" });
+  });
+});
 app.get("/profile/:userid", (req, res) => {
   const { userid } = req.params;
   const mode = req.query["new"] !== void 0 ? "new" : req.query.edit !== void 0 ? "edit" : "view";
   if (mode === "new") {
     const defaultProfile = {
       userid,
+      displayname: userid,
       avatar: "",
       // Default empty avatar
       catchphrase: "",
@@ -65,6 +77,7 @@ app.get("/profile/:userid", (req, res) => {
       if (!data) {
         const defaultProfile = {
           userid,
+          displayname: userid,
           avatar: "",
           // Default empty avatar
           catchphrase: "",

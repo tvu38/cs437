@@ -20,6 +20,12 @@ connect("puzzle");
 app.use(express.static(staticDir));
 app.use(express.json());
 
+// Redirect root path to /index.html if authenticated, or to /login if unauthenticated
+app.get("/", authenticateUser, (req: Request, res: Response) => {
+  res.redirect("/index.html");
+});
+
+
 app.use("/api/puzzles", authenticateUser, puzzles);
 app.use("/api/profiles", authenticateUser, profiles);
 app.use("/auth", auth);
@@ -28,6 +34,17 @@ app.use("/auth", auth);
 app.get("/login", (req: Request, res: Response) => {
   const page = new LoginPage();
   res.set("Content-Type", "text/html").send(page.render());
+});
+
+app.get("/api/all-profiles", (req: Request, res: Response) => {
+  Profiles.index()
+    .then((profiles) => {
+      res.status(200).json(profiles); // Respond with the profiles as JSON
+    })
+    .catch((error) => {
+      console.error("Error fetching profiles:", error);
+      res.status(500).json({ error: "Failed to fetch profiles" });
+    });
 });
 
 app.get("/profile/:userid", (req: Request, res: Response) => {
@@ -45,6 +62,7 @@ app.get("/profile/:userid", (req: Request, res: Response) => {
     // Return a default profile for new creation
     const defaultProfile = {
       userid: userid,
+      displayname: userid,
       avatar: "", // Default empty avatar
       catchphrase: "", // Default empty catchphrase
       puzzlessolved: 0, // Default value
@@ -64,6 +82,7 @@ app.get("/profile/:userid", (req: Request, res: Response) => {
           // If no profile exists, create a default one
           const defaultProfile = {
             userid: userid,
+            displayname: userid,
             avatar: "", // Default empty avatar
             catchphrase: "", // Default empty catchphrase
             puzzlessolved: 0, // Default value

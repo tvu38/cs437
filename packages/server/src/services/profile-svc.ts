@@ -4,6 +4,7 @@ import { Profile } from "../models/profile";
 const profileSchema = new Schema<Profile>(
   {
     userid: { type: String, required: true, trim: true },
+    displayname: { type: String, required: false, trim: true },
     avatar: {
         data: Buffer,
         contentType: String
