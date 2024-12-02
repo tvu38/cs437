@@ -15,10 +15,10 @@ var __reExport = (target, mod, secondTarget) => (__copyProps(target, mod, "defau
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var models_exports = {};
 module.exports = __toCommonJS(models_exports);
-__reExport(models_exports, require("./puzzle"), module.exports);
 __reExport(models_exports, require("./profile"), module.exports);
+__reExport(models_exports, require("./puzzle"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  ...require("./puzzle"),
-  ...require("./profile")
+  ...require("./profile"),
+  ...require("./puzzle")
 });
