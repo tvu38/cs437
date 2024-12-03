@@ -13,7 +13,7 @@ export class NavBarElement extends LitElement {
   render() {
     return html`
     <div class="navbar">
-      <h2> <a href="/index.html">Home </a></h2>
+      <h2> <a href="/app">Home </a></h2>
       <h2> <a href="/leaderboard.html">Leaderboard </a></h2>
       <h2><a href="/story.html">Story</a></h2>
 

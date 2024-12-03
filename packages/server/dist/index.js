@@ -30,6 +30,8 @@ var import_puzzles = __toESM(require("./routes/puzzles"));
 var import_auth2 = __toESM(require("./routes/auth"));
 var import_profile = __toESM(require("./routes/profile"));
 var import_profile_svc = __toESM(require("./services/profile-svc"));
+var import_promises = __toESM(require("node:fs/promises"));
+var import_path = __toESM(require("path"));
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
@@ -115,6 +117,12 @@ app.get("/:levelId/:puzzleId", (req, res) => {
   }).catch((err) => {
     res.status(500).send("Internal Server Error");
   });
+});
+app.use("/app", (req, res) => {
+  const indexHtml = import_path.default.resolve(staticDir, "index.html");
+  import_promises.default.readFile(indexHtml, { encoding: "utf8" }).then(
+    (html) => res.send(html)
+  );
 });
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

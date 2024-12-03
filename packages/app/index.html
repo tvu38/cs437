@@ -15,12 +15,14 @@
     <script type="module" src="/src/main"></script>
   </head>
   <body>
-    <mu-auth provides ="puzzles:auth" redirect="./login.html">
+    <mu-history provides="puzzles:history">
+    <mu-auth provides ="puzzles:auth" redirect="/login">
       <article>
         <nav-bar></nav-bar>
-        <puzzles-app></puzzles-app>
+        <mu-switch></mu-switch>
     <!-- <complex-profile-name view="view"></complex-profile-name> --> 
       </article>
 </mu-auth>
+</mu-history>
   </body>
 </html>

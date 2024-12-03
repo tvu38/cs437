@@ -10,6 +10,9 @@ import auth, { authenticateUser } from "./routes/auth";
 import profiles from "./routes/profile";
 import Profiles from "./services/profile-svc";
 
+import fs from "node:fs/promises";
+import path from "path";
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -133,6 +136,14 @@ app.get("/:levelId/:puzzleId", (req: Request, res: Response) => {
   }).catch((err) => {
     res.status(500).send("Internal Server Error");
   });
+});
+
+// SPA Routes: /app/...
+app.use("/app", (req: Request, res: Response) => {
+  const indexHtml = path.resolve(staticDir, "index.html");
+  fs.readFile(indexHtml, { encoding: "utf8" }).then((html) =>
+    res.send(html)
+  );
 });
 
 
