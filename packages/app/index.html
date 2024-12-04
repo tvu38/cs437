@@ -17,11 +17,13 @@
   <body>
     <mu-history provides="puzzles:history">
     <mu-auth provides ="puzzles:auth" redirect="/login">
+      <mu-store provides="puzzles:model">
       <article>
         <nav-bar></nav-bar>
-        <mu-switch></mu-switch>
+        <puzzles-app></puzzles-app>
     <!-- <complex-profile-name view="view"></complex-profile-name> --> 
       </article>
+      </mu-store>
 </mu-auth>
 </mu-history>
   </body>

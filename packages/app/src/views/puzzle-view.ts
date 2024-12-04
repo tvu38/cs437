@@ -1,65 +1,28 @@
-import { Auth, define, Observer } from "@calpoly/mustang";
-import { css, html, LitElement, TemplateResult } from "lit";
+import { View } from "@calpoly/mustang";
+import { html } from "lit";
 import { property, state } from "lit/decorators.js";
 import { Puzzle } from "server/models";
 import reset from "../styles/reset.css";
 import puzzlepage from "../styles/puzzlepage.css";
 import page from "../styles/page.css";
 
-export class PuzzleViewElement extends LitElement {
+import { Msg } from "../message";
+import { Model } from "../model";
+
+export class PuzzleViewElement extends View<Model, Msg> {
 
     @property({ attribute: "level", reflect: true })
-    level="";
+    level?: string;
     
     @property({ attribute: "puzzleid", reflect: true})
-    puzzleid= "";
+    puzzleid?: string;
 
     @state()
-    puzzle?: Puzzle;
+    get puzzle(): Puzzle | undefined {
+        return this.model.puzzle;
+    }
 
-    _authObserver = new Observer<Auth.Model>(
-        this,
-        "puzzles:auth"
-      );
-    
-      _user = new Auth.User();
-    
-      connectedCallback() {
-        super.connectedCallback();
-        this._authObserver.observe(({ user }) => {
-          if (user) {
-            this._user = user;
-          }
-          this.loadData();
-        });
-      }
-
-      loadData() {
-        const src = `/api/puzzles/${this.puzzleid}`;
-
-        fetch(src, {
-            headers: Auth.headers(this._user)
-          })
-            .then((res: Response) => {
-              if (res.status === 200) return res.json();
-              throw `Server responded with status ${res.status}`;
-            })
-            .catch((err) =>
-              console.log("Failed to load puzzle data:", err)
-            )
-            .then((json: unknown) => {
-              if (json) {
-                console.log("Puzzle:", json);
-                this.puzzle = json as Puzzle;
-
-              }
-            })
-            .catch((err) =>
-              console.log("Failed to convert puzzle data:", err)
-            );
-      }
-
-      render(): TemplateResult {
+      render() {
         const {
           name,
           title,
@@ -108,4 +71,22 @@ export class PuzzleViewElement extends LitElement {
     }
 
       static styles = [reset.styles, page.styles, puzzlepage.styles];
+
+      constructor() {
+        super("puzzles:model");
+      }
+
+      attributeChangedCallback(
+        name: string,
+        old: string | null,
+        value: string | null
+      ) {
+        super.attributeChangedCallback(name, old, value);
+    
+        if (name === "puzzleid" && old !== value && value)
+          this.dispatchMessage([
+            "puzzle/select",
+            { puzzleid : value }
+          ]);
+      }
 }
