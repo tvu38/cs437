@@ -23,11 +23,13 @@
         import { define, Auth } from "@calpoly/mustang";
         import { PuzzleList } from "/scripts/puzzlelist.js";
         import { NavBarElement } from "/scripts/navbar.js";
+        import { TravelerProfileElement } from "/scripts/profile.js";
 
         define ({
             "puzzle-list": PuzzleList,
             "nav-bar": NavBarElement,
-            "mu-auth": Auth.Provider
+            "mu-auth": Auth.Provider,
+            "complex-profile-name": TravelerProfileElement
         })
 
         NavBarElement.initializeOnce();
@@ -39,6 +41,8 @@
     <main class="page">
 
         <nav-bar></nav-bar>
+
+        <complex-profile-name mode="view"></complex-profile-name>
 
     <!-- <script src="/scripts/navbar.js"></script> --> 
 

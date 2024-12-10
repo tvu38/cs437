@@ -7,6 +7,7 @@ import express, {
 } from "express";
 import jwt from "jsonwebtoken";
 
+import Profile from "../services/profile-svc";
 import credentials from "../services/credential-svc";
 
 const router = express.Router();
@@ -33,20 +34,39 @@ function generateAccessToken(
 }
 
   // in src/routes/auth.js
-router.post("/register", (req: Request, res: Response) => {
-  const { username, password } = req.body; // from form
-
-  if (!username || !password) {
-    res.status(400).send("Bad request: Invalid input data.");
-  } else {
-    credentials
-      .create(username, password)
-      .then((creds) => generateAccessToken(creds.username))
-      .then((token) => {
-        res.status(201).send({ token: token });
-      });
-  }
-});
+  router.post("/register", async (req: Request, res: Response): Promise<void> => {
+    const { username, password } = req.body; // from form
+  
+    if (!username || !password) {
+      res.status(400).send("Bad request: Invalid input data.");
+      return;
+    }
+  
+    try {
+      // Step 1: Create user credentials
+      const creds = await credentials.create(username, password);
+  
+      // Step 2: Create a profile associated with the user
+      const profile = {
+        userid: username, // Use the ID from the created credentials
+        displayname: username, // Default display name to username
+        avatar: "/images/default-avatar.png", // Default avatar
+        catchphrase: "", // Default catchphrase
+        puzzlessolved: 5, // Initial solved puzzles count
+      };
+  
+      await Profile.create(profile);
+  
+      // Step 3: Generate an access token for the user
+      const token = generateAccessToken(creds.username);
+  
+      // Step 4: Respond with the generated token
+      res.status(201).send({ token });
+    } catch (error) {
+      console.error("Error during registration:", error);
+      res.status(500).send("Internal server error: Unable to register user.");
+    }
+  });
 
 // in src/routes/auth.js
 router.post("/login", (req: Request, res: Response) => {
