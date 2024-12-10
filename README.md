@@ -14,3 +14,4 @@ npm start
 ## Documentation
 
 - Our [Concept Map](IA%20Graph.png)
+- (NOTE: Up to this Point to Lab 12, Only Levels 1-2 have been completely implemented, and Level 3-4 still have puzzles in production)

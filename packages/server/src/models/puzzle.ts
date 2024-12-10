@@ -7,4 +7,5 @@ export interface Puzzle {
     flavor_text: string;
     content: string;
     featured_image?: string;
+    answer: string;
 }

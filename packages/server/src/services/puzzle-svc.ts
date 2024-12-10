@@ -11,6 +11,7 @@ const PuzzleSchema = new Schema<Puzzle>(
         flavor_text: { type: String, required: false, trim: true },
         content: { type: String, required: false, trim: true },
         featured_image: { type: String, required: false, trim: true },
+        answer: { type: String, required: true, trim: true }
     },
     { collection: "puzzles" }
 );
