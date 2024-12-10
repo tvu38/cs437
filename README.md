@@ -4,6 +4,12 @@ This package is an HTML prototype of the Funny Puzzle Hunt :P
 
 ## Running
 
+To start the entire app: 
+```shell
+cd packages/server
+npm run start:app 
+```
+
 To start the web server:
 
 ```shell
