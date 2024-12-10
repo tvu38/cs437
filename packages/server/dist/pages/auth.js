@@ -38,41 +38,38 @@ class LoginPage {
     return (0, import_renderPage.default)({
       scripts: [
         `
-          import { define, Auth } from "@calpoly/mustang";
-          import { LoginForm } from "/scripts/login-form.js";
-  
-          define({
-            "mu-auth": Auth.Provider,
-            "login-form": LoginForm
-          })
-          `
+        import { define, Auth } from "@calpoly/mustang";
+        import { LoginForm } from "/scripts/login-form.js";
+
+        define({
+          "mu-auth": Auth.Provider,
+          "login-form": LoginForm
+        })
+        `
       ],
       styles: [
         import_server.css`
-            /* your CSS here */
-          `
+        login-form {
+          display: contents;
+          align-items: center; /* Center content vertically */
+          justify-items: center; /* Center content horizontally */
+        }
+        `
       ],
       body: import_server.html`
-          <body>
-            <mu-auth provides="puzzles:auth">
-              <article>
-                <blz-header></blz-header>
-                <main class="page">
-                  <login-form api="/auth/login">
-                    <h3 slot="title">Sign in and go places!</h3>
-                  </login-form>
-                  <p class="register">
-                    Or did you want to
-                    <a href="./register">
-                      register as a new user
-                    </a>
-                    ?
-                  </p>
-                </main>
-              </article>
-            </mu-auth>
-          </body>
-        `
+        <body>
+          <mu-auth provides="puzzles:auth">
+            <article>
+              <blz-header></blz-header>
+              <main class="page">
+                <login-form api="/auth/login" register-api="/auth/register">
+                  <h3 slot="title">Sign in and solve puzzles!</h3>
+                </login-form>
+              </main>
+            </article>
+          </mu-auth>
+        </body>
+      `
     });
   }
 }

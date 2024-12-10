@@ -35,6 +35,7 @@ module.exports = __toCommonJS(auth_exports);
 var import_dotenv = __toESM(require("dotenv"));
 var import_express = __toESM(require("express"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
+var import_profile_svc = __toESM(require("../services/profile-svc"));
 var import_credential_svc = __toESM(require("../services/credential-svc"));
 const router = import_express.default.Router();
 import_dotenv.default.config();
@@ -52,14 +53,32 @@ function generateAccessToken(username) {
     );
   });
 }
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
     res.status(400).send("Bad request: Invalid input data.");
-  } else {
-    import_credential_svc.default.create(username, password).then((creds) => generateAccessToken(creds.username)).then((token) => {
-      res.status(201).send({ token });
-    });
+    return;
+  }
+  try {
+    const creds = await import_credential_svc.default.create(username, password);
+    const profile = {
+      userid: username,
+      // Use the ID from the created credentials
+      displayname: username,
+      // Default display name to username
+      avatar: "/images/default-avatar.png",
+      // Default avatar
+      catchphrase: "",
+      // Default catchphrase
+      puzzlessolved: 5
+      // Initial solved puzzles count
+    };
+    await import_profile_svc.default.create(profile);
+    const token = generateAccessToken(creds.username);
+    res.status(201).send({ token });
+  } catch (error) {
+    console.error("Error during registration:", error);
+    res.status(500).send("Internal server error: Unable to register user.");
   }
 });
 router.post("/login", (req, res) => {

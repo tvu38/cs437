@@ -1,5 +1,6 @@
 import { LitElement, css, html } from "lit";
-import { Events } from "@calpoly/mustang";
+import { Auth, Observer, Events } from "@calpoly/mustang";
+import { property } from "lit/decorators.js";
 import reset from "../styles/reset.css";
 
 function toggleDarkMode(ev: InputEvent) {
@@ -9,20 +10,55 @@ function toggleDarkMode(ev: InputEvent) {
     Events.relay(ev, "dark-mode", { checked });
   }
 
+  function signOutUser(ev: Event) {
+    Events.relay(ev, "auth:message", ["auth/signout"]);
+  }
+
 export class NavBarElement extends LitElement {
+
+  @property()
+  userid="anonymous";
+
+  @property()
+  authenticated= false;
+
+  _authObserver = new Observer<Auth.Model>(
+    this,
+    "puzzles:auth"
+  );
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    console.log("Connected")
+
+    this._authObserver.observe(({ user }) => {
+      console.log("User", user)
+      if (user && user.authenticated) {
+        this.userid = user.username;
+        this.authenticated = true;
+        return
+      }
+      this.authenticated = false;
+      this.userid = "anonymous";
+    });
+  }
+
+
   render() {
     return html`
     <div class="navbar">
       <h2> <a href="/app">Home </a></h2>
-      <h2> <a href="/leaderboard.html">Leaderboard </a></h2>
+      <h2> <a href="/leaderboard">Leaderboard </a></h2>
       <h2><a href="/story.html">Story</a></h2>
 
       <label @change=${toggleDarkMode}>
                 <input type="checkbox" />
                 <h2> Dark Mode </h2>
               </label> 
-        <h2><slot name="hint"><a href="#"></a></slot></h2>
-        <h2><slot name="solution"><a href="#"></a></slot></h2>
+
+      <h2><a href="/app/profile/${this.userid}">Edit Profile</a></h2>
+       <h2><a href="#" @click=${signOutUser}>Sign Out</a></h2>
     </div>
     `;
   }
@@ -78,5 +114,6 @@ export class NavBarElement extends LitElement {
       )
     );
   }
+  
 
 }

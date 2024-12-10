@@ -57,21 +57,21 @@ export class HomeViewElement extends LitElement {
         <div class="grid-item">
             <h2>Level 3 Puzzles</h3>
                 <ol>
-                    <li><a href="level-3/lele.html">LELE!</a></li>
-                    <li><a href="level-3/obligatory-connections-puzzle.html">Obligatory Connections Puzzle</a></li>
-                    <li><a href="level-3/three-crosses.html">Three Crosses</a></li>
-                    <li><a href="level-3/blank-spaces.html">Blank Spaces</a></li>
-                    <li><a href="level-3/list-of-really-really-really-stupid-article-ideas.html">List of really, really, really stupid article ideas</a></li>
+                    <li><a href="level-3/lele">LELE!</a></li>
+                    <li><a href="level-3/extremely-good-puzzle">Extremely Good Puzzle</a></li>
+                    <li><a href="level-3/three-crosses">Three Crosses</a></li>
+                    <li><a href="level-3/blank-spaces">Blank Spaces</a></li>
+                    <li><a href="level-3/list-of-really-really-really-stupid-article-ideas">List of really, really, really stupid article ideas</a></li>
                 </ol>
         </div>
         <div class="grid-item">
             <h2>Level 4 Puzzles</h4>
                 <ol>
-                    <li><a href="level-4/the-puzzle-that-gives-back.html">The Puzzle That Gives Back</a></li>
-                    <li><a href="level-4/path.html">Path</a></li>
-                    <li><a href="level-4/generational-gifts.html">Generational Gifts</a></li>
-                    <li><a href="level-4/all-the-moves.html">All the Moves</a></li>
-                    <li><a href="level-4/50-50.html">50/50</a></li>
+                    <li><a href="level-4/unknown">□□□□□□</a></li>
+                    <li><a href="level-4/path">Path</a></li>
+                    <li><a href="level-4/painting">Painting</a></li>
+                    <li><a href="level-4/mobel">Möbel</a></li>
+                    <li><a href="level-4/50-50">50/50</a></li>
                 </ol>
         </div>
     </div>
