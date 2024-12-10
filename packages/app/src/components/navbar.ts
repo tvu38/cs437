@@ -50,7 +50,7 @@ export class NavBarElement extends LitElement {
     <div class="navbar">
       <h2> <a href="/app">Home </a></h2>
       <h2> <a href="/leaderboard">Leaderboard </a></h2>
-      <h2><a href="/story.html">Story</a></h2>
+      <h2><a href="/story">Story</a></h2>
 
       <label @change=${toggleDarkMode}>
                 <input type="checkbox" />

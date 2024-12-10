@@ -12,15 +12,19 @@
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
 
-    <script type="module" crossorigin src="/assets/index-Dh8-BdX1.js"></script>
+    <script type="module" crossorigin src="/assets/index-aw2jJGi_.js"></script>
   </head>
   <body>
-    <mu-auth provides ="puzzles:auth" redirect="./login.html">
+    <mu-history provides="puzzles:history">
+    <mu-auth provides ="puzzles:auth" redirect="/login">
+      <mu-store provides="puzzles:model">
       <article>
         <nav-bar></nav-bar>
         <puzzles-app></puzzles-app>
     <!-- <complex-profile-name view="view"></complex-profile-name> --> 
       </article>
+      </mu-store>
 </mu-auth>
+</mu-history>
   </body>
 </html>

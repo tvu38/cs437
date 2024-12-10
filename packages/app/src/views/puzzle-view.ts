@@ -28,7 +28,6 @@ export class PuzzleViewElement extends View<Model, Msg> {
             flavor_text,
             content,
             featured_image,
-            answer
           } = this.puzzle || {};
         
           return html`

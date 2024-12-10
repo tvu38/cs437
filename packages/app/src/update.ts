@@ -39,8 +39,7 @@ export default function update(
     
     // put the rest of your cases here
     default:
-      const unhandled: never = message[0];
-      throw new Error(`Unhandled Auth message "${unhandled}"`);
+      throw new Error(`Unhandled Auth message`);
   }
 }
 

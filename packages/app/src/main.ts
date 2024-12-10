@@ -5,6 +5,7 @@ import { HomeViewElement } from "./views/home-view";
 import { PuzzleViewElement }from "./views/puzzle-view";
 import { LeaderboardView } from "./views/leaderboard-view";
 import { ProfileViewElement } from "./views/profile-view";
+import { StoryViewElement } from "./views/story-view";
 
 import { init, Model } from "./model";
 import update from "./update";
@@ -28,8 +29,15 @@ const routes: Switch.Route[] = [
   {
     path: "/leaderboard",
     redirect: "/login",
-    view: (params: Switch.Params) => html`
+    view: () => html`
     <leaderboard-view></leaderboard-view>
+    `
+  },
+  {
+    path: "/story",
+    redirect: "/login",
+    view: () => html`
+    <story-view></story-view>
     `
   },
   {
@@ -91,5 +99,6 @@ define({
   "puzzle-view": PuzzleViewElement,
   "nav-bar": NavBarElement,
   "profile-view": ProfileViewElement,
-  "leaderboard-view": LeaderboardView
+  "leaderboard-view": LeaderboardView,
+  "story-view": StoryViewElement
 });

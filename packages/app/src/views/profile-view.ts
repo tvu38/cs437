@@ -159,7 +159,7 @@ import {
     }
   
     static styles = [
-      profileStyle
+      profileStyle,
     ];
 
     private _handleAvatarChange(event: Event) {
